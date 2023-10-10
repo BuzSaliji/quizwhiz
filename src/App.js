@@ -30,6 +30,15 @@ function App() {
     }
   };
 
+  const handlePlayAgain = () => {
+    // Reset state variables
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setIsQuizEnd(false);
+    // Optionally, fetch new quiz data
+    fetchQuizData();
+  };
+
   useEffect(() => {
     fetchQuizData();
   }, []);
@@ -38,7 +47,10 @@ function App() {
     <div className="App">
       <h1>QuizWhiz</h1>
       {isQuizEnd ? (
-        <p>Your Score: {score}</p>
+        <div>
+          <p>Your Score: {score}</p>
+          <button onClick={handlePlayAgain}>Play Again</button>
+        </div>
       ) : quizData.length > 0 ? (
         <div>
           <h2 dangerouslySetInnerHTML={{ __html: quizData[currentQuestionIndex].question }} />
