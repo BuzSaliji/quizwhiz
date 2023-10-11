@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import './Quiz.css';
 
 const Quiz = () => {
   const { categoryId } = useParams();
@@ -66,10 +67,10 @@ const Quiz = () => {
   const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
 
   return (
-    <div>
+    <div className="quiz">
       <h1>Quiz</h1>
       {!loading && (
-        <div>
+        <div className="container">
           <p dangerouslySetInnerHTML={{ __html: questions[currentQuestionIndex].question }} />
           {shuffledAnswers.map((answer, index) => (
             <button key={index} onClick={() => handleAnswerClick(answer)}>
