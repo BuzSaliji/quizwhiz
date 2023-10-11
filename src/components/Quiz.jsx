@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './Quiz.css';
 
 const Quiz = () => {
@@ -9,6 +9,19 @@ const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [score, setScore] = useState(0);
+  const navigate = useNavigate();
+  const [isQuizFinished, setIsQuizFinished] = useState(false);
+
+
+  const playAgain = () => {
+    // Reset any quiz state if needed
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setSelectedAnswer(null);
+
+    // Navigate to the home page
+    navigate('/');
+  };
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -58,6 +71,7 @@ const Quiz = () => {
         setSelectedAnswer(null);
       } else {
         alert(`Quiz finished! Your score: ${score}`);
+        setIsQuizFinished(true);
       }
     }, 500);
   };
@@ -77,6 +91,12 @@ const Quiz = () => {
               {answer}
             </button>
           ))}
+        </div>
+      )}
+      {isQuizFinished && (
+        <div>
+          <p>Your Score: {score}</p>
+          <button onClick={playAgain}>Play Again</button>
         </div>
       )}
     </div>
