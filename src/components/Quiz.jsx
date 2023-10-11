@@ -5,6 +5,9 @@ const Quiz = () => {
   const { categoryId } = useParams();
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -22,16 +25,37 @@ const Quiz = () => {
 
   if (loading) return <p>Loading...</p>;
 
+  const handleNextQuestion = () => {
+    if (selectedAnswer === questions[currentQuestionIndex].correct_answer) {
+      setScore((prevScore) => prevScore + 1);
+    }
+  
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      setSelectedAnswer(null); 
+    } else {
+      alert(`Quiz finished! Your score: ${score}`);
+    }
+  };
+
   return (
     <div>
       <h1>Quiz</h1>
-      {questions.map((question, index) => (
-        <div key={index}>
-          <p dangerouslySetInnerHTML={{ __html: question.question }} />
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          <p dangerouslySetInnerHTML={{ __html: questions[currentQuestionIndex].question }} />
+          {questions[currentQuestionIndex].incorrect_answers.map((answer, index) => (
+            <button key={index} onClick={() => setSelectedAnswer(answer)}>
+              {answer}
+            </button>
+          ))}
+          <button onClick={handleNextQuestion}>Next</button>
         </div>
-      ))}
+      )}
     </div>
   );
-};
+}
 
 export default Quiz;
