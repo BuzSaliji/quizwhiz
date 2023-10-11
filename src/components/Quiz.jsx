@@ -12,9 +12,20 @@ const Quiz = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       setLoading(true);
-
+      try {
+        const response = await fetch(`https://opentdb.com/api.php?amount=10&category=${categoryId}`);
+        const data = await response.json();
+        setQuestions(data.results);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
     fetchQuestions();
   }, [categoryId]);
+  
 
   if (loading) return <p>Loading...</p>;
 
