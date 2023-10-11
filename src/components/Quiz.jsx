@@ -12,24 +12,21 @@ const Quiz = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       setLoading(true);
-
-        const response = await fetch(`https://opentdb.com/api.php?amount=10&category=${categoryId}`);
-        const data = await response.json();
-        setQuestions(data.results);
-    
-        setLoading(false);
-      };
-
+      const response = await fetch(`https://opentdb.com/api.php?amount=10&category=${categoryId}`);
+      const data = await response.json();
+      setQuestions(data.results);
+      setLoading(false);
+    };
     fetchQuestions();
   }, [categoryId]);
 
   if (loading) return <p>Loading...</p>;
 
+  // eslint-disable-next-line no-unused-vars
   const handleNextQuestion = () => {
     if (selectedAnswer === questions[currentQuestionIndex].correct_answer) {
       setScore((prevScore) => prevScore + 1);
     }
-  
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setSelectedAnswer(null); 
@@ -38,20 +35,40 @@ const Quiz = () => {
     }
   };
 
+  const handleAnswerClick = (answer) => {
+    setSelectedAnswer(answer);
+    console.log("Selected Answer:", answer);
+  
+    if (answer === questions[currentQuestionIndex].correct_answer) {
+      setScore((prevScore) => prevScore + 1);
+    }
+  
+    
+    setTimeout(() => {
+      if (currentQuestionIndex < questions.length - 1) {
+        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        setSelectedAnswer(null);
+      } else {
+        alert(`Quiz finished! Your score: ${score}`);
+      }
+    }, 500);
+  };
+
+  const currentQuestion = questions[currentQuestionIndex];
+  const allAnswers = [...currentQuestion.incorrect_answers, currentQuestion.correct_answer];
+  const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
+
   return (
     <div>
       <h1>Quiz</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
+      {!loading && (
         <div>
           <p dangerouslySetInnerHTML={{ __html: questions[currentQuestionIndex].question }} />
-          {questions[currentQuestionIndex].incorrect_answers.map((answer, index) => (
-            <button key={index} onClick={() => setSelectedAnswer(answer)}>
+          {shuffledAnswers.map((answer, index) => (
+            <button key={index} onClick={() => handleAnswerClick(answer)}>
               {answer}
             </button>
           ))}
-          <button onClick={handleNextQuestion}>Next</button>
         </div>
       )}
     </div>
