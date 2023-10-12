@@ -22,9 +22,16 @@
     align-self: center;
     margin: 40px;
     text-align: center;
+    font-weight: bold;
   }
 
   .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .endgame {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,5 +52,9 @@
   
   button:hover {
     background-color: #357ab7;
+  }
+
+  .endheader {
+    color: #333;
   }
   

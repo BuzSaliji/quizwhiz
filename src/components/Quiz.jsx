@@ -70,7 +70,6 @@ const Quiz = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         setSelectedAnswer(null);
       } else {
-        alert(`Quiz finished! Your score: ${score}`);
         setIsQuizFinished(true);
       }
     }, 500);
@@ -94,8 +93,8 @@ const Quiz = () => {
         </div>
       )}
       {isQuizFinished && (
-        <div>
-          <p>Your Score: {score}</p>
+        <div className='endgame'>
+          <h1 className='endheader'>Your Score: {score}</h1>
           <button onClick={playAgain}>Play Again</button>
         </div>
       )}
