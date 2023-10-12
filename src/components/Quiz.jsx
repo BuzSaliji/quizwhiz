@@ -82,17 +82,16 @@ const Quiz = () => {
   return (
     <div className="quiz">
       <h1>Quiz</h1>
-      {!loading && (
+      {!isQuizFinished ? (
         <div className="container">
-          <p dangerouslySetInnerHTML={{ __html: questions[currentQuestionIndex].question }} />
+          <p dangerouslySetInnerHTML={{ __html: questions[currentQuestionIndex]?.question }} />
           {shuffledAnswers.map((answer, index) => (
             <button key={index} onClick={() => handleAnswerClick(answer)}>
               {answer}
             </button>
           ))}
         </div>
-      )}
-      {isQuizFinished && (
+      ) : (
         <div className='endgame'>
           <h1 className='endheader'>Your Score: {score}</h1>
           <button onClick={playAgain}>Play Again</button>
@@ -100,6 +99,7 @@ const Quiz = () => {
       )}
     </div>
   );
+  
 }
 
 export default Quiz;
