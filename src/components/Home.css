@@ -7,6 +7,11 @@
     color: #333;
     font-family: 'Arial', sans-serif;
   }
+
+  .home button a {
+    text-decoration: none;
+    color: inherit;
+  }
   
   h1 {
     color: #4a90e2;
@@ -19,6 +24,7 @@
     justify-self: center;
     align-self: center;
     font-family: 'Arial', sans-serif;
+    font-weight: bold;
     text-align: center;
     color: #333;
   }
@@ -49,7 +55,6 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    text-decoration: none;
   }
   
   button:hover {

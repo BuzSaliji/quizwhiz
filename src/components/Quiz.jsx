@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './Quiz.css';
 
 const Quiz = () => {
@@ -9,6 +9,19 @@ const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [score, setScore] = useState(0);
+  const navigate = useNavigate();
+  const [isQuizFinished, setIsQuizFinished] = useState(false);
+
+
+  const playAgain = () => {
+    // Reset any quiz state if needed
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setSelectedAnswer(null);
+
+    // Navigate to the home page
+    navigate('/');
+  };
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -57,7 +70,7 @@ const Quiz = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         setSelectedAnswer(null);
       } else {
-        alert(`Quiz finished! Your score: ${score}`);
+        setIsQuizFinished(true);
       }
     }, 500);
   };
@@ -69,18 +82,24 @@ const Quiz = () => {
   return (
     <div className="quiz">
       <h1>Quiz</h1>
-      {!loading && (
+      {!isQuizFinished ? (
         <div className="container">
-          <p dangerouslySetInnerHTML={{ __html: questions[currentQuestionIndex].question }} />
+          <p dangerouslySetInnerHTML={{ __html: questions[currentQuestionIndex]?.question }} />
           {shuffledAnswers.map((answer, index) => (
             <button key={index} onClick={() => handleAnswerClick(answer)}>
               {answer}
             </button>
           ))}
         </div>
+      ) : (
+        <div className='endgame'>
+          <h1 className='endheader'>Your Score: {score}</h1>
+          <button onClick={playAgain}>Play Again</button>
+        </div>
       )}
     </div>
   );
+  
 }
 
 export default Quiz;
