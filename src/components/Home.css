@@ -15,15 +15,17 @@
   
   h1 {
     color: #4a90e2;
-    font-size: 2em;
+    font-size: 4em;
     margin-bottom: 20px;
+    font-family: "Brush Script MT", cursive;
+    font-weight: bold;
   }
 
   p {
     display: flex;
     justify-self: center;
     align-self: center;
-    font-family: 'Arial', sans-serif;
+    font-family: "Brush Script MT", cursive;
     font-weight: bold;
     text-align: center;
     color: #333;
@@ -55,6 +57,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-family: "Brush Script MT", cursive;
   }
   
   button:hover {
