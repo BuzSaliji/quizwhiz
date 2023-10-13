@@ -13,6 +13,8 @@
     color: #4a90e2;
     font-size: 2em;
     margin-bottom: 20px;
+    font-family: "Brush Script MT", cursive;
+    font-weight: bold;
   }
   
   p {
@@ -23,6 +25,7 @@
     margin: 40px;
     text-align: center;
     font-weight: bold;
+    font-family: "Brush Script MT", cursive;
   }
 
   .container {
